@@ -1,0 +1,148 @@
+/* ==========================================================================
+   Maintain Mining — Design Tokens (single source of truth)
+   v2 — GRAPHITE. The brand is the two-tone language of the heavy-machinery
+   world (Komatsu, Caterpillar): GRAPHITE #303234 — the grayish black of the
+   machine fleet — as the one flat brand value and logo colour, with SAFETY
+   AMBER #FFB800 — the equipment-yellow of the mine site — as the single
+   working accent: primary actions, hazard highlights, stat callouts, tape
+   keylines. Everything else is charcoal, steel and paper.
+   The logo mark is graphite on light surfaces and inverts to white on dark
+   (graphite reads 1.2:1 on the dark grounds — never place it there).
+   Amber carries only pit-black ink and never becomes a text colour on light.
+   Spec + usage rules: ../DESIGN.md      Living reference: ./index.html
+   ========================================================================== */
+:root {
+  /* ---- Brand anchors -------------------------------------------------------- */
+  --mm-graphite:        #303234; /* LOGO MARK · core brand · the grayish black */
+  --mm-amber:           #FFB800; /* SAFETY AMBER · primary action + hazard · 8.5:1 on shaft */
+  --mm-seam-gradient:   linear-gradient(115deg, #131416 0%, #303234 52%, #5F6570 100%);
+                                 /* charcoal → graphite → steel · light surfaces only */
+
+  /* ---- Brand core ------------------------------------------------------------ */
+  --mm-black:           #131416; /* pit-black base                   */
+  --mm-black-2:         #0E0F10;
+  --mm-black-3:         #1C1E20;
+  --mm-shaft:           #26282B; /* primary dark surface (signature) */
+  --mm-steel:           #9AA1A8; /* muted steel accent · 5.7:1 on shaft */
+  --mm-steel-bright:    #C4CAD0; /* icon/detail steel on dark · 8.9:1 on shaft */
+  --mm-steel-deep:      #5F6570; /* muted steel on light · 5.9:1 on white */
+  --mm-gray-tint-1:     #F1F2F3; /* pale graphite chip on light      */
+  --mm-gray-tint-2:     #E4E6E8; /* highlight tint on light          */
+  --mm-amber-tint:      #FFF1CC; /* pale amber chip on light         */
+  --mm-cloud:           #F5F4F1; /* off-white paper                  */
+  --mm-white:           #FFFFFF;
+
+  /* ---- Ink & neutrals (document / report usage) ------------------------------ */
+  --mm-ink:             #26282B; /* body text on light · 14.8:1 on white */
+  --mm-slate:           #5C6670; /* muted text on light · 5.9:1 on white */
+  --mm-surface-gray-1:  #F8F9F9;
+  --mm-surface-gray-2:  #F1F2F3;
+
+  /* ---- Text on dark ----------------------------------------------------------- */
+  --mm-on-dark:         #FFFFFF;
+  --mm-on-dark-muted:   rgba(255,255,255,0.72);
+  --mm-on-dark-faint:   rgba(255,255,255,0.55);
+
+  /* ---- Semantic roles (build against these, not raw brand vars) -------------- */
+  --color-bg:            var(--mm-shaft);
+  --color-bg-deep:       var(--mm-black);
+  --color-surface:       var(--mm-white);
+  --color-surface-soft:  var(--mm-cloud);
+  --color-text:          var(--mm-ink);
+  --color-text-muted:    var(--mm-slate);
+  --color-primary:       var(--mm-amber);      /* the one action colour */
+  --color-primary-ink:   var(--mm-black);      /* the only ink allowed on amber */
+  --color-accent:        var(--mm-graphite);   /* the logo colour — light surfaces only */
+  --color-highlight:     var(--mm-amber);      /* alias of primary: hazard, keylines */
+  --color-highlight-ink: var(--mm-black);
+  --color-gradient:      var(--mm-seam-gradient);
+  --color-line:          rgba(255,255,255,0.10); /* hairline on dark */
+  --color-line-light:    rgba(38,40,43,0.12);    /* hairline on light */
+
+  /* ---- Status severity -------------------------------------------------------- */
+  /* Deliberately NOT rebranded: these are functional traffic-light semantics.
+     Green-means-pass survives a palette change; recolouring it would cost more
+     than it gains. Always pair the colour with a label. */
+  --sev-pass-fg:    #0C4A26; --sev-pass-bg:    #E5F8EE;
+  --sev-low-fg:     #1E40AF; --sev-low-bg:     #DBEAFE;
+  --sev-medium-fg:  #854D0E; --sev-medium-bg:  #FEF9C3;
+  --sev-high-fg:    #9A3412; --sev-high-bg:    #FFEDD5;
+  --sev-critical-fg:#991B1B; --sev-critical-bg:#FEE2E2;
+
+  /* ---- Typography -------------------------------------------------------------- */
+  --font-display: 'Albert Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body:    'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-social:  'Vela Sans', var(--font-display); /* social-graphic alternate */
+  --tracking-display: -0.02em;
+  --tracking-tight:   -0.01em;
+  --leading-display:  1.05;
+  --leading-body:     1.6;
+
+  --text-display: clamp(2.75rem, 6vw, 4.5rem);
+  --text-h1:      clamp(2rem, 4vw, 3rem);
+  --text-h2:      clamp(1.5rem, 3vw, 2rem);
+  --text-h3:      1.375rem;
+  --text-h4:      1.125rem;
+  --text-body-lg: 1.125rem;
+  --text-body:    1rem;
+  --text-sm:      0.875rem;
+  --text-xs:      0.75rem;
+  --text-overline:0.6875rem;
+
+  /* ---- Spacing (4px base) ------------------------------------------------------- */
+  --space-1:.25rem; --space-2:.5rem; --space-3:.75rem; --space-4:1rem;
+  --space-5:1.5rem; --space-6:2rem;  --space-7:3rem;   --space-8:4rem;
+  --space-9:6rem;   --space-10:8rem;
+
+  /* ---- Radius -------------------------------------------------------------------- */
+  --radius-sharp:0; --radius-sm:6px; --radius-md:10px; --radius-lg:16px;
+  --radius-xl:24px; --radius-pill:999px;
+
+  /* ---- Elevation & glow ------------------------------------------------------------ */
+  --shadow-sm:0 1px 2px rgba(14,15,16,.08);
+  --shadow-md:0 6px 20px rgba(14,15,16,.12);
+  --shadow-lg:0 20px 50px rgba(14,15,16,.35);
+  --glow-amber:0 0 40px rgba(255,184,0,.20);
+
+  /* ---- Signature background system -------------------------------------------------- */
+  --grid-line: rgba(255,184,0,0.06);  /* amber survey grid on dark */
+  --grid-size: 40px;
+
+  /* ---- Motion ------------------------------------------------------------------------- */
+  --dur-fast:120ms; --dur-base:200ms; --dur-slow:320ms;
+  /* Scroll-entrance tier. Longer than the UI scale because these elements travel
+     further and start off-screen; same curve, because the system has one curve. */
+  --dur-reveal:620ms; --stagger-word:60ms; --stagger-card:70ms;
+  --ease-out:cubic-bezier(0.22,1,0.36,1);
+
+  /* ---- z-index scale -------------------------------------------------------------------- */
+  --z-dropdown:1000; --z-sticky:1100; --z-modal-backdrop:1200;
+  --z-modal:1300; --z-toast:1400; --z-tooltip:1500;
+}
+
+/* ---- Signature utilities (reuse everywhere the brand needs its texture) ------ */
+.mm-grid-bg{
+  background-color:var(--mm-shaft);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size:var(--grid-size) var(--grid-size);
+}
+.mm-glow{ background-image:radial-gradient(60% 60% at 70% 18%, rgba(255,184,0,.12), transparent 70%); }
+.mm-gradient{ background-image:var(--mm-seam-gradient); }
+/* Gradient text — the seam ramp (charcoal → graphite → steel) on display type.
+   Light surfaces only: the ramp's charcoal start vanishes on the dark grounds. */
+.mm-gradient-text{
+  background-image:var(--mm-seam-gradient);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+/* Hazard tape — the mine-site keyline. Use as a thin divider (4–8px tall),
+   a table top-rule, or a chart annotation. Never as a fill behind text. */
+.mm-hazard{
+  background:repeating-linear-gradient(135deg,
+    var(--mm-amber) 0 12px, var(--mm-black) 12px 24px);
+}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{ animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; scroll-behavior:auto!important; }
+}

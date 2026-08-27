@@ -141,3 +141,18 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Design-system master art: the 0.5-24MB originals sitting directly in
+# design-system/graphics/ (~90MB in total). The site never serves these — the
+# web-optimised deliverables live in design-system/graphics/web/ and
+# website/public/brand/graphics/, and both stay tracked.
+#
+# NOTE: this means git is not the backup for the masters. Keep them in the design
+# asset store, or move them to Git LFS if they should be versioned here.
+design-system/graphics/*.png
+design-system/graphics/*.jpg
+
+# Local verification screenshots (Playwright / browser-tool scratch output).
+# Regenerate with website/scripts/capture.mjs; never part of the deliverable.
+.playwright-mcp/
+.captures/

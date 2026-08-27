@@ -1,0 +1,177 @@
+@import "tailwindcss";
+
+/* Design-system tokens: the single source of truth lives one level up.
+   Every colour, radius, shadow and motion value comes from there. */
+@import "../../design-system/tokens.css";
+
+/* next/font injects --font-albert / --font-inter on <html>; point the
+   design-system font tokens at them so the whole system uses the loaded faces. */
+:root {
+  --font-display: var(--font-albert), 'Albert Sans', system-ui, sans-serif;
+  --font-body: var(--font-inter), 'Inter', system-ui, sans-serif;
+}
+
+/* Map brand tokens into Tailwind v4 utility names (bg-shaft, text-amber, ...). */
+@theme inline {
+  --color-graphite: var(--mm-graphite);
+  --color-amber: var(--mm-amber);
+  --color-amber-tint: var(--mm-amber-tint);
+  --color-shaft: var(--mm-shaft);
+  --color-pit: var(--mm-black);
+  --color-pit-2: var(--mm-black-2);
+  --color-pit-3: var(--mm-black-3);
+  --color-steel: var(--mm-steel);
+  --color-steel-bright: var(--mm-steel-bright);
+  --color-steel-deep: var(--mm-steel-deep);
+  --color-cloud: var(--mm-cloud);
+  --color-ink: var(--mm-ink);
+  --color-muted: var(--mm-slate);
+  --font-display: var(--font-albert), 'Albert Sans', system-ui, sans-serif;
+  --font-sans: var(--font-inter), 'Inter', system-ui, sans-serif;
+  --radius-brand: 10px;
+  --radius-panel: 16px;
+}
+
+body {
+  background: var(--mm-black);
+  color: var(--mm-on-dark);
+  font-family: var(--font-body);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-display);
+  text-wrap: balance;
+  font-weight: 800;
+}
+
+::selection {
+  background: var(--mm-amber);
+  color: var(--mm-black);
+}
+
+/* Signature moment: the hazard tape crawls like a conveyor (one per page).
+   The design-system reduced-motion guard in tokens.css stops it. */
+@keyframes mm-conveyor {
+  to { background-position: -33.941px 0; }
+}
+.conveyor {
+  animation: mm-conveyor 4s linear infinite;
+}
+
+/* Hero entrance cascade: transform/opacity only, guarded by the tokens.css
+   reduced-motion block. */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.rise {
+  opacity: 0;
+  animation: rise-in var(--dur-slow) var(--ease-out) forwards;
+  animation-delay: var(--rise-delay, 0ms);
+}
+
+/* Focus visibility on dark grounds. */
+:focus-visible {
+  outline: 2px solid var(--mm-amber);
+  outline-offset: 2px;
+}
+
+/* Lenis smooth scroll — the four rules the engine needs, inlined rather than
+   imported from node_modules so the stylesheet has no build-path dependency.
+   See components/SmoothScroll.tsx; there is exactly one engine on this site. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Raised-panel hover on the dark grounds.
+   The charcoal drop shadows (--shadow-md/lg) are near-invisible on pit and
+   shaft, so elevation is carried by the hairline brightening and a top-edge
+   light catch instead. Transform + opacity only; the tokens.css reduced-motion
+   guard neutralises the transitions. Requires `relative` on the element. */
+.card-lift {
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out);
+}
+.card-lift::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.1),
+    transparent 38%
+  );
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .card-lift:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.22);
+  }
+  .card-lift:hover::after {
+    opacity: 1;
+  }
+}
+
+/* Photography wears the brand quietly: muted colour at rest, full colour on
+   contact. The rest state keeps enough saturation that photos clearly read in
+   colour (dusty ochres, equipment yellow) without shouting over the graphite
+   world; hovering a .photo-frame lifts the filter. Background photos keep the
+   muted state permanently — a hero should not change colour under the cursor.
+   The transition is filter-only and the tokens.css reduced-motion guard
+   neutralises it. */
+.photo-muted {
+  filter: saturate(0.6) contrast(1.04) brightness(0.95);
+  transition: filter var(--dur-slow) var(--ease-out);
+}
+@media (hover: hover) {
+  .photo-frame:hover .photo-muted {
+    filter: none;
+  }
+}
+.photo-frame:focus-within .photo-muted {
+  filter: none;
+}
+
+/* Nav underline: grows from the left on hover, stays put on focus-visible so
+   keyboard users get the same affordance the outline already gives them. */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 1px;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: currentColor;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+@media (hover: hover) {
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+}
